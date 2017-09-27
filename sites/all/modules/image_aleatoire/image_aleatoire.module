@@ -1,0 +1,32 @@
+<?php
+	function image_aleatoire_menu(){
+		$items['image-aleatoire'] = array(
+			'title' => 'img',
+			'page callback' => 'image_aleatoire_page',
+			'access callback' => TRUE
+		);
+		return $items;
+	}
+	function image_aleatoire_page(){
+		$chemin_site_all = base_path().'sites/all/modules/image_aleatoire/';
+		$chemin_image =  path_to_theme().'/images/';
+		$html = '
+				<script type="text/javascript">
+					setInterval(function() {
+						jQuery.ajax({
+							type: "POST",
+							url: "'.$chemin_site_all.'"+"image_aleatoire.php",
+							success: function(data){
+								jQuery("#thisImg").attr("src","'.$chemin_image.'"+data)
+							}
+						});		
+					}, 5000);
+				
+				</script>
+				<div>
+					<img id="thisImg" src="" border=0></img>
+				</div>
+				';
+		return $html;
+	}
+?>
